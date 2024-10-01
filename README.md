@@ -27,14 +27,17 @@ Dự án này mô tả cách điều khiển đèn LED sử dụng một nút nh
 Đảm bảo tệp `platformio.ini` của bạn được cấu hình đúng cho bo ESP32 và các thư viện cần thiết. Dưới đây là một ví dụ cấu hình:
 
 ```ini
-[env:esp32doit-devkit-v1]
+[env]
 platform = espressif32
-board = esp32doit-devkit-v1
 framework = arduino
 monitor_speed = 115200
+upload_speed = 921600
 lib_deps = mathertel/OneButton@^2.6.1
-build_flags =
-    '-D BTN_PIN=13U'
-    '-D BTN_ACT=LOW'
-    '-D LED_PIN=4U'
-    '-D LED_ACT=HIGH'
+
+[env:esp32doit-devkit-v1]
+board = esp32doit-devkit-v1
+build_flags = 
+	'-D BTN_PIN=0U'
+	'-D BTN_ACT=LOW'
+	'-D LED_PIN=4U'
+	'-D LED_ACT=HIGH'
