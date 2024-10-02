@@ -1,24 +1,29 @@
-# Điều Khiển Đèn LED với OneButton Library
+# Điều khiển LED bằng Nút Bấm
 
-Dự án này mô tả cách điều khiển đèn LED sử dụng một nút nhấn đơn với thao tác single-click và double-click. Nút nhấn được xử lý bằng thư viện OneButton để nhận biết nhiều hành động mà không làm gián đoạn vòng lặp chính.
+Dự án này trình bày cách điều khiển LED bằng một nút bấm sử dụng vi điều khiển ESP32 và thư viện OneButton. Nó hỗ trợ việc bật và tắt LED bằng cách nhấn đơn, chuyển đổi giữa hai LED bằng nhấn đúp, và khởi động một chức năng bằng cách nhấn giữ.
 
 ## Tính Năng
-- **Single-click**: Bật hoặc tắt đèn LED.
-- **Double-click**: Chuyển đèn LED vào chế độ nháy hoặc tắt chế độ nháy.
+
+- **Nhấn Đơn**: Bật và tắt LED.
+- **Nhấn Đúp**: Kích hoạt hiệu ứng nhấp nháy trên LED.
 
 ## Yêu Cầu Phần Cứng
-1. **ESP32 Dev Kit**.
-2. **Đèn LED** kết nối với GPIO 4 (hoặc chân GPIO khác có thể cấu hình).
 
-### Sơ Đồ Kết Nối
-- **Đèn LED**:
-  - Kết nối **cực dương** của đèn LED với chân GPIO 4 (`LED_PIN`).
-  - Kết nối **cực âm** của đèn LED với GND thông qua **điện trở 330Ω**.
-  
-## Cấu Hình PlatformIO
-Đảm bảo tệp `platformio.ini` của bạn được cấu hình đúng cho bo ESP32 và các thư viện cần thiết. Dưới đây là một ví dụ cấu hình:
+- **ESP32 DoIt DevKit V1**
+- **LED**: Kết nối đến pin đã định nghĩa.
+- **Điện trở**: mắc nối tiếp với LED, 1kΩ.
 
-```ini
+## Yêu Cầu Phần Mềm
+
+- [PlatformIO](https://platformio.org/) để quản lý dự án.
+- Thư viện sau:
+  - [OneButton](https://github.com/mathertel/OneButton) của Matthias Hertel
+  - LED.h trong thư mục lib
+
+## Cấu hình
+
+Dự án có thể được cấu hình bằng cách chỉnh sửa tệp platformio.ini:
+```
 [env]
 platform = espressif32
 framework = arduino
@@ -29,7 +34,14 @@ lib_deps = mathertel/OneButton@^2.6.1
 [env:esp32doit-devkit-v1]
 board = esp32doit-devkit-v1
 build_flags = 
-	'-D BTN_PIN=0U'
-	'-D BTN_ACT=LOW'
-	'-D LED_PIN=4U'
-	'-D LED_ACT=HIGH'
+    '-D BTN_PIN=0U'          ; chân IO0(thay đổi nếu bạn dùng nút ấn bên ngoài)
+    '-D BTN_ACT=LOW'         ; Trạng thái hoạt động của nút bấm cho biết nó hoạt động khi ở mức LOW
+    '-D LED_PIN=4U'         ; chân IO4
+    '-D LED_ACT=HIGH'        ; Trạng thái hoạt động của LED là HIGH
+```
+Đảm bảo điều chỉnh các giá trị BTN_PIN và LED_PIN theo kết nối phần cứng của bạn.
+
+## Sử dụng 
+
+- **Nhấn Đơn**: Nhấn nút một lần để bật hoặc tắt LED.
+- **Nhấn Đúp**: Nhấn nút hai lần nhanh để làm LED nhấp nháy.
